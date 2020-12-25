@@ -1,0 +1,67 @@
+.likedList {
+    width: 35%;
+    margin: auto;
+    list-style: none;
+    text-align: center;
+    background-color: #FE3C72;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.likedList li {
+    margin: 10px;
+    background-color: #7a6363;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.chat {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    line-height: 1.2em;
+    /* justify-content: space-evenly; */
+}
+
+.chatIcon {
+    transform: scale(0.9);
+}
+
+.likedHeader {
+    text-align: center;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 2em;
+}
+
+.likedCards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.likedCard {
+    /* height: 240px; */
+    padding: 20px;
+
+    width: 200px;
+    border-radius: 25px;
+    box-shadow: 0px 5px 23px 7px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    /* box-shadow: 0px 10px 53px rgba(0, 0, 0, 0.3 );  */
+    background-color: white;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 20px
+}
+
+.likedCard img {
+    height: 140px;
+    width: 140px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+    margin: 10px auto;
+}

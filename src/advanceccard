@@ -1,0 +1,141 @@
+import React, { useState, useMemo, useEffect } from 'react'
+import './Cards.css';
+import TinderCard from 'react-tinder-card'
+import Swipe from './Swipe';
+import './Swipe.css'
+const db = [
+    {id:2,
+        name:"Hilda Ross",
+    imgUrl:"https://woman-ukraine.com/wp-content/uploads/2019/06/Ukrainian-women-for-marriage.jpg"},
+
+    {id:3,name:"Taya Bauch",
+    imgUrl:"https://tse3.mm.bing.net/th?id=OIP.j9mqS3cEWYrTQkpt8K8XZwHaLH&pid=Api&P=0&w=300&h=300"},
+
+    {id:4,name:"Karen Ortiz",
+    imgUrl:"https://tse3.mm.bing.net/th?id=OIP.zEnMNkSd1GoODrCwt5IdJgHaKS&pid=Api&P=0&w=300&h=300"},
+
+    {id:5,name:"Sarina Walter",
+    imgUrl:"https://www.theskinnybeep.com/wp-content/uploads/2011/09/Albino-Spring-Summer-2012-Women-Fashion-Show-Catwalk-Milan-Fashion-Albino-ss-2012-Women.jpg"},
+
+    {id:6,name:"Marcella Kohler",
+    imgUrl:"http://lifearoundasia.com/wp-content/uploads/2017/03/kazakhstan-women.jpg"},
+
+    {id:7,name:"Marian Schumm",
+    imgUrl:"https://www.theskinnybeep.com/wp-content/uploads/2014/09/Fendi-Women-s-Collection-2015.jpg"},
+
+    {id:8,name:"Hettie Walsh",
+    imgUrl:"https://tse1.mm.bing.net/th?id=OIP.QJRuDig0YDPYZcOdQtUsbQHaHa&pid=Api&P=0&w=300&h=300"},
+
+    {id:9,name:"Kaylah McKenzie",
+    imgUrl:"https://www.womenofgrace.com/blog/wp-content/uploads/2016/04/woman-praying-bw.jpg"},
+
+    {id:10,name:"Aisha Considine",
+    imgUrl:"https://tse1.mm.bing.net/th?id=OIP.WLb5fG8X0K7aw4YG0FBJqQHaLH&pid=Api&P=0&w=300&h=300"},
+    {id:1,
+        name:"Ariana Grande",
+    imgUrl:"https://vignette.wikia.nocookie.net/wherearetheavocados/images/2/20/ArianaGrande.jpg/revision/latest?cb=20200612210229"}
+]
+
+const alreadyRemoved = []
+let peopleState = db // This fixes issues with updating people state forcing it to use the current state and not the state that was active when the card was created.
+
+function AdvancedCard (props) {
+    
+    useEffect(() => {
+        setLiked(props.likedList);
+      },[])
+      
+    const [liked, setLiked] = useState([]);
+
+
+  var [people, setPeople] = useState(db);
+
+
+  var likedList=props.likedList;
+ if (props.likedList.length===0){
+      likedList=liked;
+      }
+
+  var likedPeople=[]
+likedList.forEach((val)=>{
+  likedPeople.push(val.value)
+})
+
+
+  
+  const childRefs = useMemo(() => Array(db.length).fill(0).map(i => React.createRef()), [])
+
+  const swiped = (direction, nameToDelete) => {
+         alreadyRemoved.push(nameToDelete);
+         if(direction==="right"){
+            setLiked((prev)=>{
+         return [...prev,{id:prev.length,value:nameToDelete}];
+        });
+        // liked.forEach((val)=>{
+        //     people=people.filter((v)=>{
+        //       return v.name!==val.value
+        //     })
+        //   })
+      }
+  }
+
+  const outOfFrame = (name) => {
+    peopleState = peopleState.filter(person => person.name !== name)
+    setPeople(peopleState)
+//     if(direction==='right'){
+//         people=people.filter((v)=>{
+//       return v.name!==name
+//     })
+// }
+  }
+
+  const swipe = (dir) => {
+    const cardsLeft = people.filter(person => !alreadyRemoved.includes(person.name))
+    if (cardsLeft.length) {
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].name // Find the card object to be removed
+      const index = db.map(person => person.name).indexOf(toBeRemoved) // Find the index of which to make the reference to
+      alreadyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
+      childRefs[index].current.swipe(dir) // Swipe the card!
+    }
+  }
+
+  
+
+  const callLikeUpdater=(like)=>{
+    props.updateLikes(like);
+  }
+
+callLikeUpdater(liked);
+
+
+  return (
+    <>
+      <div className='cards'>
+      <div className="card swiped">
+       <div className="swipedInner">
+         <h1>You have swiped through everyone we have!</h1>
+         <p>Refresh to swipe more people!</p>
+            </div>
+            </div>
+        {people.map((person, index) =>
+          <TinderCard ref={childRefs[index]} className='card'
+           key={person.name}
+            onSwipe={(dir) => swiped(dir, person.name)}
+             onCardLeftScreen={() => outOfFrame(person.name)}>
+            <img src={person.imgUrl}/>
+              <h3>{person.name}</h3>
+            
+          </TinderCard>
+        )}
+      </div>
+      <Swipe left={() => swipe('left')} right={() => swipe('right')}/>
+
+      {/* <div className='buttons'>
+        <button onClick={() => swipe('left')}>Swipe left!</button>
+        <button onClick={() => swipe('right')}>Swipe right!</button>
+      </div> */}
+      {/* {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>} */}
+    </>
+  )
+}
+export default AdvancedCard;

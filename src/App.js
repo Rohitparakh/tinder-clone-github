@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import Header from './Header';
+import Cards from './Cards';
+import Liked from'./Liked';
+import {Switch, Route } from 'react-router-dom';
+import AdvancedCard from "./AdvancedCard";
+
 
 function App() {
+  
+  var likedList=[];
+const updateLikes=(newLikes)=>{
+ likedList=newLikes;
+}
+var peopleWithoutLike=[];
+const peopleWithoutLikeUpdater=(peopleWithoutLikes)=>{
+peopleWithoutLike=peopleWithoutLikes
+}
+
+var unlikedList=[];
+const updateUnlikes=(newUnlikes)=>{
+ unlikedList=newUnlikes;
+//  let unique=[];
+   
+  //  if(unlikedList){ unlikedList.forEach((val)=>{
+  //       if(!unique.includes(val.name)){
+  //           unique.push(val)
+  //       }
+  //   })
+  //   unlikedList=unique
+  //   console.log(unique)
+  // }
+}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      
+ 
+    <Header/>
+    <Switch><Route exact path="/" render={()=><AdvancedCard likedList={likedList} updateLikes={updateLikes} unlikedList={unlikedList} updateUnlikes={updateUnlikes} peopleWithoutLike={peopleWithoutLike} peopleWithoutLikeUpdater={peopleWithoutLikeUpdater}/>}/>
+  {/* <Route exact path="/basic" render={()=><Cards likedList={likedList} updateLikes={updateLikes}/>}/> */}
+
+  <Route exact path="/liked" render={()=><Liked likedList={likedList}/>}/>
+  </Switch>
+    
+ 
     </div>
   );
 }

@@ -1,0 +1,21 @@
+.header{
+    position: relative;
+    display: flex;
+    height:10vh;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+/* .button{
+    
+    display: none; 
+}
+
+.icon{
+    
+} */
+
+.logo{
+    height:40px
+}
