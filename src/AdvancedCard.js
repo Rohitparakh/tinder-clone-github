@@ -1,5 +1,5 @@
 //not registering like in peoplewithoutlike when swiping in unliked list
-
+//unliked people are also people without like
 import React, { useState, useMemo, useEffect } from 'react'
 import './Cards.css';
 import TinderCard from 'react-tinder-card'
@@ -52,20 +52,24 @@ function AdvancedCard (props) {
        
       
        if(props.peopleWithoutLike.length!==0){ 
-console.log(props.peopleWithoutLike);
+// console.log(props.peopleWithoutLike);
 props.peopleWithoutLikeUpdater(peopleWithoutLike)
 }
 if(unlikedList.length===0){
   if(likedList.length!==0){
     setRender(props.peopleWithoutLike)
-
+// console.log("Rendering props.peopleWithoutLike");
   }
   else{
   setRender(people)
+// console.log("Rendering people");
+
   }
 }
 else{
   setRender(unlikedList)
+// console.log("Rendering unlikedList");
+
 }
       },[])
 
@@ -115,16 +119,16 @@ likedPeople.forEach((val)=>{
   peopleWithoutLike=peopleWithoutLike.filter((v)=>{
     return v.name!==val
   })
-  console.log(likedPeople)
+  // console.log(likedPeople)
 })
  if(peopleWithoutLike){
- peopleWithoutLike.filter((person, index, self) =>
+  peopleWithoutLike.filter((person, index, self) =>
     index === self.findIndex((t) => (
         t.name !== person.name
     ))
     )}
 props.peopleWithoutLikeUpdater(peopleWithoutLike)
-console.log(peopleWithoutLike);
+// console.log(peopleWithoutLike);
 
 
 var unlikedList=props.unlikedList;
@@ -140,25 +144,32 @@ unlikedList.forEach((val)=>{
 
   
   const childRefs = useMemo(() => Array(db.length).fill(0).map(i => React.createRef()), [])
+  console.log(childRefs);
   var unlikedNew
   const swiped = (direction, nameToDelete,index,imgUrl) => {
          alreadyRemoved.push(nameToDelete);
+     
          if(direction==="right"){
             setLiked((prev)=>{
          return [...prev,{id:prev.length,imgUrl:imgUrl,name:nameToDelete}];
         });
+// callLikeUpdater(liked);
        
       
       //  props.unlikedList.forEach((val=>{
          unlikedNew=unliked.filter((v)=>{
            return v.name!==nameToDelete
          })
-// console.log(unlikedNew);
+         console.log(unlikedNew)
+         setUnliked(unlikedNew)
+       
          callUnlikeUpdater(unlikedNew)
       //  }))
       
           // console.log(people);
       }
+      console.log(liked);
+      console.log(unlikedNew);
       if(direction==="left"){
         setUnliked((prev)=>{
      return [...prev,{id:prev.length,
@@ -214,7 +225,7 @@ callUnlikeUpdater(unliked);
             </div>
         {render.map((person, index) =>
           <TinderCard ref={childRefs[index]} className='card' key={person.id} onSwipe={(dir) => swiped(dir, person.name,person.id,person.imgUrl)} onCardLeftScreen={() => outOfFrame(person.name)}>
-            <img src={person.imgUrl}/>
+            <img src={person.imgUrl} alt={`Image of ${person.name}`}/>
               <h3>{person.name}</h3>
             
           </TinderCard>

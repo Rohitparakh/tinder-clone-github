@@ -10,7 +10,7 @@ const Liked=(props)=>{
     index === self.findIndex((t) => (
         t.name === thing.name
     )))
-    console.log(likedList);
+    // console.log(likedList);
     var likedPeople=[]
     // likedList.forEach((val)=>{
     // likedPeople.push(val)
