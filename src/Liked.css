@@ -38,6 +38,7 @@
 .likedCards {
     display: flex;
     flex-wrap: wrap;
+    justify-content:center;
 }
 
 .likedCard {

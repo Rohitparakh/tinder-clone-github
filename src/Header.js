@@ -19,7 +19,7 @@ function Header() {
             </NavLink>
             </IconButton>
             
-            <NavLink to="/">
+            <NavLink to="/tinder-clone">
 <img src="./img/logo.png" className="logo" alt=""/>
 </NavLink>
 

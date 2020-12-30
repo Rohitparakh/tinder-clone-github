@@ -37,7 +37,7 @@ const updateUnlikes=(newUnlikes)=>{
       
  
     <Header/>
-    <Switch><Route exact path="/" render={()=><AdvancedCard likedList={likedList} updateLikes={updateLikes} unlikedList={unlikedList} updateUnlikes={updateUnlikes} peopleWithoutLike={peopleWithoutLike} peopleWithoutLikeUpdater={peopleWithoutLikeUpdater}/>}/>
+    <Switch><Route exact path="/tinder-clone" render={()=><AdvancedCard likedList={likedList} updateLikes={updateLikes} unlikedList={unlikedList} updateUnlikes={updateUnlikes} peopleWithoutLike={peopleWithoutLike} peopleWithoutLikeUpdater={peopleWithoutLikeUpdater}/>}/>
   {/* <Route exact path="/basic" render={()=><Cards likedList={likedList} updateLikes={updateLikes}/>}/> */}
 
   <Route exact path="/liked" render={()=><Liked likedList={likedList}/>}/>
